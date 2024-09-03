@@ -12,7 +12,7 @@ serde = { version = "1.0.204", default-features = false, features = ["derive", "
 # System independent crates provided by ArceOS.
 axerrno = "0.1.0"
 memory_addr = "0.3.0"
-axaddrspace  = { git = "https://github.com/arceos-hypervisor/axaddrspace.git" }
-axdevice_base = { git = "https://github.com/arceos-hypervisor/axdevice_crates.git"}
+axaddrspace  = { path = "../axaddrspace" }
+axdevice_base = { path = "../axdevice_crates/axdevice_base" }
 
 vgic = { path = "../axdevice_crates/vgic" }
