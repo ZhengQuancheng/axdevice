@@ -2,6 +2,7 @@ use crate::AxVmDeviceConfig;
 
 use alloc::sync::Arc;
 use alloc::vec::Vec;
+use spin::Mutex;
 
 use axaddrspace::GuestPhysAddr;
 use axdevice_base::EmulatedDeviceConfig;
@@ -9,7 +10,7 @@ use axdevice_base::{BaseDeviceOps, EmuDeviceType};
 use axerrno::AxResult;
 
 /* Devs */
-use vgic::Vgic;
+use arm_vgic::Vgic;
 
 /// represent A vm own devices
 pub struct AxVmDevices {
