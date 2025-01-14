@@ -14,6 +14,7 @@ extern crate log;
 
 mod config;
 mod device;
+pub mod timer;
 
 pub use config::AxVmDeviceConfig;
 pub use device::AxVmDevices;
