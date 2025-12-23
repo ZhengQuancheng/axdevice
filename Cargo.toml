@@ -18,6 +18,7 @@ axvmconfig = { version = "0.1", default-features = false }
 axaddrspace = "0.1"
 axdevice_base = "0.1"
 range-alloc = { git = "https://github.com/arceos-hypervisor/range-alloc.git" }
+axvuart = { git = "https://github.com/ZhengQuancheng/axvuart.git" }
 
 [target.'cfg(target_arch = "aarch64")'.dependencies]
 arm_vgic = { version = "0.1", features = ["vgicv3"] }

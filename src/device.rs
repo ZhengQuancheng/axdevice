@@ -16,6 +16,9 @@ use memory_addr::{PhysAddr, is_aligned_4k};
 
 use crate::AxVmDeviceConfig;
 
+// Virtual UART device
+use axvuart::{VirtPL011, VirtPL011Config, PL011Manager};
+
 #[cfg(target_arch = "aarch64")]
 use arm_vgic::Vgic;
 
@@ -247,6 +250,33 @@ impl AxVmDevices {
                         );
                     } else {
                         warn!("IVCChannel already initialized, ignoring additional config");
+                    }
+                }
+                EmulatedDeviceType::Console => {
+                    #[cfg(target_arch = "aarch64")]
+                    {
+                        let uart_id = PL011Manager::gen_id();
+                        // Create Virtual PL011 UART device
+                        let uart_config = VirtPL011Config {
+                            uart_id: uart_id,
+                            base_gpa: config.base_gpa,
+                            length: config.length,
+                            irq_id: config.irq_id,
+                        };
+
+                        let uart = Arc::new(VirtPL011::new(uart_config));
+
+                        this.add_mmio_dev(uart.clone());
+                        info!(
+                            "VirtPL011[{}] initialized: {} at GPA {:#x}, length {:#x}, IRQ {}",
+                            uart_id,
+                            config.name,
+                            config.base_gpa,
+                            config.length,
+                            config.irq_id
+                        );
+
+                        PL011Manager::register(uart_id, uart.clone());
                     }
                 }
                 _ => {
